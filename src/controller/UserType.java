@@ -12,7 +12,7 @@ package controller;
  */
 public enum UserType {
 
-    Student(1), Instructor(0);
+    Instructor(0), Student(1);
 
     private final int value;
 
