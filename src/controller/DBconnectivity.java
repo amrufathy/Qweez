@@ -23,7 +23,7 @@ public class DBconnectivity {
     public static boolean Connect() {
         try {
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz", "root", "swimming95");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz", "root", "");
             stat = con.createStatement();
             connected = true;
             
