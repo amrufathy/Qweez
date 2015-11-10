@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,7 +9,7 @@ package controller;
  *
  * @author amr
  */
-public class UserInfo {
+public class User {
 
     private int id;
     private UserType type;
@@ -39,7 +39,7 @@ public class UserInfo {
         this.username = username;
     }
     
-    public UserInfo(int id, UserType type, String username) {
+    public User(int id, UserType type, String username) {
         this.id = id;
         this.type = type;
         this.username = username;
