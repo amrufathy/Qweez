@@ -42,7 +42,7 @@ public class MultipleChoiceQuestion extends Question {
 
     @Override
     public String getAnswer() {
-        return choices.get(index - 1);
+        return choices.get(index);
     }
 
     @Override
