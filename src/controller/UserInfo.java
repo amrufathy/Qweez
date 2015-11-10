@@ -38,7 +38,7 @@ public class UserInfo {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    
     public UserInfo(int id, UserType type, String username) {
         this.id = id;
         this.type = type;

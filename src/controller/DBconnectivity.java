@@ -17,18 +17,21 @@ public class DBconnectivity {
 
     private static Connection con;
     private static Statement stat;
-    private static String lasterror = "";
+    private static String error = "";
     private static boolean connected = false;
 
     public static boolean Connect() {
         try {
+            
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz", "root", "swimming95");
             stat = con.createStatement();
             connected = true;
+            
         } catch (Exception e) {
-            lasterror = e.getMessage();
-            //System.out.println(lasterror);
+            
+            error = e.getMessage();
             connected = false;
+            
         }
         return connected;
     }
@@ -41,8 +44,8 @@ public class DBconnectivity {
         return stat;
     }
 
-    public static String getLasterror() {
-        return lasterror;
+    public static String getError() {
+        return error;
     }
 
     public static boolean isConnected() {
