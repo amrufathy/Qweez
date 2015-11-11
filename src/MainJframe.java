@@ -48,15 +48,8 @@ public class MainJframe extends javax.swing.JFrame {
     public MainJframe() {
         questionCounter = 0;
         qc = new QuizController();
-
         quizList = DB.readFromDB();
-
         int quiz_count = quizList.size();
-
-        /*
-         generate
-        
-         */
         Random random = new Random();
         quiz_id = random.nextInt(quiz_count);
 
@@ -69,7 +62,6 @@ public class MainJframe extends javax.swing.JFrame {
         }
 
         Quiz qu = quizList.get(quiz_id);
-
         int size = qu.getQuestions().size();
         answered = new boolean[size];
         Arrays.fill(answered, false);
