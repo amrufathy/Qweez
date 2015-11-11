@@ -44,8 +44,9 @@ public class Session {
 
         try {
 
-            String query = "insert into users (username, password, type) values (\'" + username + "\', " + Arrays.hashCode(password) + ", " + UserType.Student.getValue() + ");";
-            DB.getStat().executeUpdate(query);
+            String query = "insert into users (username, password, type) values (\'" + username + "\', "
+                    + Arrays.hashCode(password) + ", " + UserType.Student.getValue() + ");";
+            DB.getStatement().executeUpdate(query);
 
         } catch (Exception e) {
 
@@ -66,7 +67,7 @@ public class Session {
         try {
 
             String query = "select * from users where username=\'" + username + "\'";
-            ResultSet res = DB.getStat().executeQuery(query);
+            ResultSet res = DB.getStatement().executeQuery(query);
 
             if (res.next()) {
                 if (res.getInt("password") != Arrays.hashCode(password)) {
@@ -74,7 +75,8 @@ public class Session {
                 }
             }
 
-            current = new User(res.getInt("user_id"), UserType.values()[res.getInt("type")], res.getString("username"));
+            current = new User(res.getInt("user_id"), UserType.values()[res.getInt("type")],
+                    res.getString("username"));
 
         } catch (Exception e) {
 
