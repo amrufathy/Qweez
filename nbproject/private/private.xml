@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/amr/NetBeansProjects/Qweez/src/controller/qweez.json</file>
             <file>file:/home/amr/NetBeansProjects/Qweez/src/controller/DB.java</file>
-            <file>file:/home/amr/NetBeansProjects/Qweez/src/model/Quiz.java</file>
-            <file>file:/home/amr/NetBeansProjects/Qweez/src/controller/QuizController.java</file>
+            <file>file:/home/amr/NetBeansProjects/Qweez/src/model/MultipleChoiceQuestion.java</file>
+            <file>file:/home/amr/NetBeansProjects/Qweez/src/controller/JSON.java</file>
             <file>file:/home/amr/NetBeansProjects/Qweez/src/MainJframe.java</file>
         </group>
     </open-files>
