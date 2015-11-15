@@ -137,7 +137,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="l_username">
               <Properties>
-                <Property name="text" type="java.lang.String" value="student1"/>
+                <Property name="text" type="java.lang.String" value="instructor1"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="l_usernameActionPerformed"/>
@@ -358,13 +358,7 @@
                       <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;&#xa;    },&#xa;    new String [] {&#xa;        &quot;Name&quot;, &quot;# of Qs&quot;, &quot;Instructor&quot;&#xa;    }&#xa;)&#xa;{public boolean isCellEditable(int row, int column) {return false;}}&#xa;" type="code"/>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                      <TableColumnModel selectionModel="0">
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                      </TableColumnModel>
+                      <TableColumnModel selectionModel="0"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="" noResource="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -692,7 +686,7 @@
                                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="45" max="32767" attributes="0"/>
+                                      <EmptySpace pref="54" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jScrollPane2" pref="374" max="32767" attributes="0"/>
                                           <Component id="jScrollPane3" max="32767" attributes="0"/>
@@ -775,12 +769,12 @@
                     </Container>
                     <Component class="javax.swing.JLabel" name="jLabel8">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Qusetion:   "/>
+                        <Property name="text" type="java.lang.String" value="Qusetion:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel9">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Answer:  "/>
+                        <Property name="text" type="java.lang.String" value="Answer:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="FiBSubmit">

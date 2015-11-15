@@ -31,7 +31,7 @@ import java.util.ArrayList;
  */
 public class Quiz {
 
-    private ArrayList<Question> questions;
+    private final ArrayList<Question> questions;
     private int score;
     private int id;
     private User u;

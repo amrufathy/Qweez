@@ -32,7 +32,7 @@ import model.*;
 public class QuizController {
 
     private static int quizCount = 0;
-    private Quiz quiz = new Quiz();
+    private final Quiz quiz = new Quiz();
 
     public static int getQuizCount() {
         return quizCount;

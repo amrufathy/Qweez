@@ -26,19 +26,12 @@
  *
  * @author amr
  */
-import controller.DB;
-import controller.QuizController;
-import controller.Session;
+import controller.*;
+import model.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JPanel;
-import model.Question;
-import model.Quiz;
-import model.ShortAnswerQuestion;
-import model.TrueFalseQuestion;
-import model.UserType;
-import model.MultipleChoiceQuestion;
 
 public class MainJframe extends javax.swing.JFrame {
 
@@ -48,21 +41,22 @@ public class MainJframe extends javax.swing.JFrame {
     public MainJframe() {
         questionCounter = 0;
         qc = new QuizController();
-        quizList = DB.readFromDB();
-        int quiz_count = quizList.size();
+        quizList = JSON.readJson();
+        //quizList = DB.readDB();
+        quiz_count = quizList.size();
         Random random = new Random();
-        quiz_id = random.nextInt(quiz_count);
+        //quiz_id = random.nextInt(quiz_count);
+        quiz_id = quiz_count - 1;
+        //quiz_id = 0;
 
         if (quizList == null) {
             System.out.println("Error in retrieving quiz list.");
         }
 
-        for (int i = 0; i < quiz_count; i++) {
-            quizList.set(i, DB.loadQuiz(i + 1));
-        }
+        //quiz = DB.loadQuiz(quiz_id);
+        quiz = JSON.loadQuiz(quiz_id);
 
-        Quiz qu = quizList.get(quiz_id);
-        int size = qu.getQuestions().size();
+        int size = quiz.getQuestions().size();
         answered = new boolean[size];
         Arrays.fill(answered, false);
 
@@ -194,7 +188,7 @@ public class MainJframe extends javax.swing.JFrame {
             }
         });
 
-        l_username.setText("student1");
+        l_username.setText("instructor1");
         l_username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 l_usernameActionPerformed(evt);
@@ -583,9 +577,9 @@ public class MainJframe extends javax.swing.JFrame {
     fbAnsText.setRows(5);
     jScrollPane3.setViewportView(fbAnsText);
 
-    jLabel8.setText("Qusetion:   ");
+    jLabel8.setText("Qusetion:");
 
-    jLabel9.setText("Answer:  ");
+    jLabel9.setText("Answer:");
 
     FiBSubmit.setText("Submit");
     FiBSubmit.addActionListener(new java.awt.event.ActionListener() {
@@ -612,7 +606,7 @@ public class MainJframe extends javax.swing.JFrame {
                     .addGroup(fillBlankPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel8)
                         .addComponent(jLabel9))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                     .addGroup(fillBlankPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                         .addComponent(jScrollPane3)))
@@ -898,9 +892,13 @@ public class MainJframe extends javax.swing.JFrame {
         if (Session.getCurrent().getType() == UserType.Instructor) {
             Switch(teacher);
         } else {
-            Question q = quizList.get(quiz_id).getQuestions().get(questionCounter);
+            Question q = quiz.getQuestions().get(questionCounter);
             String question = "Question 1\n";
-            question += q.getQuestion();
+            if (q instanceof MultipleChoiceQuestion) {
+                question += q.getText();
+            } else {
+                question += q.getQuestion();
+            }
             setEditability(q, answered[0]);
             quesText.setText(question);
             Switch(student);
@@ -1023,19 +1021,22 @@ public class MainJframe extends javax.swing.JFrame {
 
     private void finish1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finish1ActionPerformed
         // TODO add your handling code here:
-        DB.writeToDB(qc);
+        DB.writeDB(qc.getQuiz());
+        JSON.writeJson(qc.getQuiz());
         Switch(teacher);
     }//GEN-LAST:event_finish1ActionPerformed
 
     private void finish3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finish3ActionPerformed
         // TODO add your handling code here:
-        DB.writeToDB(qc);
+        DB.writeDB(qc.getQuiz());
+        JSON.writeJson(qc.getQuiz());
         Switch(teacher);
     }//GEN-LAST:event_finish3ActionPerformed
 
     private void finish2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finish2ActionPerformed
         // TODO add your handling code here:
-        DB.writeToDB(qc);
+        DB.writeDB(qc.getQuiz());
+        JSON.writeJson(qc.getQuiz());
         Switch(teacher);
     }//GEN-LAST:event_finish2ActionPerformed
 
@@ -1043,13 +1044,17 @@ public class MainJframe extends javax.swing.JFrame {
         // TODO add your handling code here:
         quesText.setText("");
         questionCounter++;
-        if (questionCounter >= (quizList.get(quiz_id).getQuestions().size())) {
+        if (questionCounter >= (quiz.getQuestions().size())) {
             questionCounter = 0;
         }
         int id = questionCounter;
-        Question q = quizList.get(quiz_id).getQuestions().get(questionCounter);
+        Question q = quiz.getQuestions().get(questionCounter);
         String question = "Question " + (id + 1) + "\n";
-        question += q.getQuestion();
+        if (q instanceof MultipleChoiceQuestion) {
+            question += q.getText();
+        } else {
+            question += q.getQuestion();
+        }
         setEditability(q, answered[id]);
         quesText.setText(question);
     }//GEN-LAST:event_nextStdBtnActionPerformed
@@ -1059,12 +1064,16 @@ public class MainJframe extends javax.swing.JFrame {
         quesText.setText("");
         questionCounter--;
         if (questionCounter < 0) {
-            questionCounter = (quizList.get(quiz_id).getQuestions().size() - 1);
+            questionCounter = (quiz.getQuestions().size() - 1);
         }
         int id = questionCounter;
-        Question q = quizList.get(quiz_id).getQuestions().get(questionCounter);
+        Question q = quiz.getQuestions().get(questionCounter);
         String question = "Question " + (id + 1) + "\n";
-        question += q.getQuestion();
+        if (q instanceof MultipleChoiceQuestion) {
+            question += q.getText();
+        } else {
+            question += q.getQuestion();
+        }
         setEditability(q, answered[id]);
         quesText.setText(question);
     }//GEN-LAST:event_backStdBtnActionPerformed
@@ -1073,8 +1082,16 @@ public class MainJframe extends javax.swing.JFrame {
         // TODO add your handling code here:
         int id = questionCounter;
         answered[id] = true;
-        Quiz qu = quizList.get(quiz_id);
+        Quiz qu = quiz;
         Question q = qu.getQuestions().get(id);
+        boolean done = true;
+        for (boolean b : answered) {
+            if (!b) {
+                done = false;
+            }
+        }
+
+        //boolean done = Arrays.stream(answered).allMatch(s -> s.equals(true));
         if (q instanceof TrueFalseQuestion) {
             boolean answer = trueStdRadioBtn.isSelected();
             boolean correct = q.checkAnswer(answer);
@@ -1107,14 +1124,19 @@ public class MainJframe extends javax.swing.JFrame {
                 qu.incrementScore();
             }
         }
+
         setEditability(null, answered[id]);
+
+        if (done) {
+            finishStdBtnActionPerformed(evt);
+        }
 
     }//GEN-LAST:event_submitStdBtnActionPerformed
 
     private void finishStdBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishStdBtnActionPerformed
         // TODO add your handling code here:
-        int score = quizList.get(quiz_id).getScore();
-        int numQues = quizList.get(quiz_id).getQuestions().size();
+        int score = quiz.getScore();
+        int numQues = quiz.getQuestions().size();
         String finish = "Congratulations !\nYou finished the quiz.\n";
         finish += "Your score was " + score + "/" + numQues + ".";
         finishText.setText(finish);
@@ -1219,10 +1241,12 @@ public class MainJframe extends javax.swing.JFrame {
 
     private String error = "";
     private int questionCounter;
-    private QuizController qc;
-    private ArrayList<Quiz> quizList;
-    private boolean[] answered;
-    private int quiz_id;
+    private final QuizController qc;
+    private final ArrayList<Quiz> quizList;
+    private final boolean[] answered;
+    private final int quiz_id;
+    private final int quiz_count;
+    private final Quiz quiz;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton FiBBtn;

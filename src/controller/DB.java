@@ -29,11 +29,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import model.MultipleChoiceQuestion;
-import model.Question;
-import model.Quiz;
-import model.ShortAnswerQuestion;
-import model.TrueFalseQuestion;
+import model.*;
 
 /**
  *
@@ -78,7 +74,7 @@ public class DB {
         return connected;
     }
 
-    public static void writeToDB(QuizController qc) {
+    public static void writeDB(Quiz qu) {
         int index = -1;
         try {
             if (!isConnected() && !Connect()) {
@@ -103,7 +99,8 @@ public class DB {
 
             String query = "insert into questions (quiz_id, questionText, questionType,answers) values";
 
-            for (Question q : qc.getQuiz().getQuestions()) {
+            for (Question q : qu.getQuestions()) {
+
                 if (q instanceof MultipleChoiceQuestion) {
 
                     query += " (\'" + q.getQuizID() + "\', \'" + q.getQuestion()
@@ -129,7 +126,7 @@ public class DB {
         }
     }
 
-    public static ArrayList<Quiz> readFromDB() {
+    public static ArrayList<Quiz> readDB() {
         int i = -1;
         try {
             if (!isConnected() && !Connect()) {
@@ -173,6 +170,8 @@ public class DB {
             if (!isConnected() && !Connect()) {
                 return null;
             }
+
+            id += 1;
 
             ResultSet r = DB.getStatement().executeQuery("select * from questions where quiz_id=" + id);
 
